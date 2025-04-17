@@ -4,3 +4,4 @@ joblib
 pillow
 Python-IO
 tensorflow
+sklearn
