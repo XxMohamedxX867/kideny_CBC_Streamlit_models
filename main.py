@@ -7,8 +7,8 @@ import PIL.ImageOps
 import io
 
 # Load model and scaler for CBC prediction
-cbc_model = load_model('CBC_V2_Model.keras')
-scaler_cbc = joblib.load('std_scaler_v2model.bin')
+cbc_model = load_model('models/CBC_V2_Model.keras')
+scaler_cbc = joblib.load('models/std_scaler_v2model.bin')
 
 # Anemia class names for CBC prediction
 class_names_cbc = {
@@ -27,7 +27,7 @@ def model_v2_predict(inputs):
     return class_names_cbc[label]
 
 # Load kidney model
-kideny_model = load_model('kideny_model.keras')
+kideny_model = load_model('models/kideny_model.keras')
 class_names_kideny = ['Cyst', 'Normal', 'Stone', 'Tumor']
 
 # Streamlit Interface
@@ -42,7 +42,9 @@ prediction_type = st.sidebar.radio("Choose model:", ["CBC Prediction", "Kidney P
 if prediction_type == "CBC Prediction":
     st.subheader("Enter CBC Test Data")
 
-    gender = st.selectbox("Gender", [0, 1])  # 0 = Male, 1 = Female
+    #gender = st.selectbox("Gender", [0, 1])  # 0 = Male, 1 = Female
+    gender = {"Male": 0, "Female": 1}[st.selectbox("Gender", ["Male", "Female"])]
+
     wbc = st.number_input("WBC (White Blood Cells)", min_value=0.0, step=0.1)
     ne = st.number_input("NE (Neutrophils)", min_value=0.0, step=0.1)
     ly = st.number_input("LY (Lymphocytes)", min_value=0.0, step=0.1)
